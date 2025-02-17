@@ -5,6 +5,8 @@ const AUTH_ENDPOINT =
   "https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
 const TOKEN_KEY = "whos-who-access-token";
 
+//TEST COMMENT FOR GIT
+
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
