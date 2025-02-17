@@ -5,14 +5,15 @@ import { RouterModule, Routes } from "@angular/router";
 
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./home/home.component";
-import { DatacardComponent } from './home/datacard/datacard.component';
+import { DatacardComponent } from './home/question-card/datacard/datacard.component';
 import { AnswerkeyComponent } from './home/answerkey/answerkey.component';
-import { AudioComponentComponent } from './home/datacard/audio-component/audio-component.component';
+import { AudioComponentComponent } from './home/question-card/datacard/audio-component/audio-component.component';
+import { QuestionCardComponent } from './home/question-card/question-card.component';
 
 const routes: Routes = [{ path: "", component: HomeComponent }];
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, DatacardComponent, AnswerkeyComponent, AudioComponentComponent],
+  declarations: [AppComponent, HomeComponent, DatacardComponent, AnswerkeyComponent, AudioComponentComponent, QuestionCardComponent],
   imports: [BrowserModule, FormsModule, RouterModule.forRoot(routes)],
   providers: [],
   bootstrap: [AppComponent],

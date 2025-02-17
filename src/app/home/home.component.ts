@@ -15,11 +15,15 @@ const TOKEN_KEY = "whos-who-access-token";
 export class HomeComponent implements OnInit {
   constructor() {}
 
-  QuizData: any = {
+  QuizData: any = [{
     img_url: "https://placehold.co/200x200",
     answer: "1",
-    options: ["1","2","3","4"]
-  }
+    options: ["1", "2", "3", "4"]
+  },{
+    img_url: "https://placehold.co/200x200",
+    answer: "1",
+    options: ["2", "4", "6", "9"]
+  }]
 
   genres: String[] = ["House", "Alternative", "J-Rock", "R&B"];
   selectedGenre: String = "";
