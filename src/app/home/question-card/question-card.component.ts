@@ -6,13 +6,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./question-card.component.css']
 })
 export class QuestionCardComponent implements OnInit {
-<<<<<<< HEAD
-  @Input() correct: number = 0;
-  @Input() index: number = 0;
-=======
   @Output() selected = new EventEmitter<string>();
   index: number = 0;
->>>>>>> 43835381dc8e51ca7aa07408de0c74fc043929cb
   @Input() data: any = [{
     img_url: "https://placehold.co/200x200",
     answer: "1",

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 
 @Component({
@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AnswerkeyComponent implements OnInit {
   answerKey: { question: string, answer: string, userSelected: String, index: number }[] = [{question: 'question' ,answer: 'answer', userSelected: 'userSelected', index: 0 }];
-
+  @Output() valueEmitted = new EventEmitter<{ index: number, isCorrect: boolean }>();
   constructor() { }
 
   ngOnInit(): void {
@@ -19,5 +19,11 @@ export class AnswerkeyComponent implements OnInit {
       { question: 'Who wrote "To Kill a Mockingbird"?', answer: 'Harper Lee',  userSelected: 'Harper Lee', index: 2 },
       // Add more questions and answers here
     ];
+  }
+  checkAnswers() {
+    this.answerKey.forEach((item, index) => {
+      const isCorrect = item.answer === item.userSelected;
+      this.valueEmitted.emit({ index, isCorrect });
+    });
   }
 }
