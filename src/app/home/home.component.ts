@@ -13,11 +13,12 @@ const TOKEN_KEY = "whos-who-access-token";
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit {
-  index: number = 0;
-  genre: string = "pop"
-  numberOfQuestions: number = 2
   constructor() { }
-  correct: boolean[] = [false,false]
+
+  index: number = 0;
+  genre: string = "pop";
+  numberOfQuestions: number = 2;
+  correct: boolean[] = [false, false];
   QuizData: any = [{
     img_url: "https://placehold.co/200x200",
     answer: "1",
@@ -77,7 +78,7 @@ export class HomeComponent implements OnInit {
         include_external: "audio"
       }
     })
-    console.log("RESPONSE : "+response)
+    console.log("RESPONSE : " + response)
     this.configLoading = false;
   }
 
@@ -118,12 +119,17 @@ export class HomeComponent implements OnInit {
     console.log(TOKEN_KEY);
   }
 
-  setSelected(value:string){
+  setSelected(value: string) {
     this.userSelection = value;
-    if(this.userSelection == this.QuizData[this.index].answer){
+    console.log(this.index)
+    console.log(this.QuizData.length)
+    if (this.userSelection == this.QuizData[this.index].answer) {
       this.correct[this.index] = true;
     }
     console.log(this.correct[this.index])
-    this.index++;
+    if(this.index < this.QuizData.length - 1){
+      this.index = this.index + 1;
+    }
+    console.log(this.index)
   }
 }
