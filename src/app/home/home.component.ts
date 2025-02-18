@@ -13,12 +13,13 @@ const TOKEN_KEY = "whos-who-access-token";
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit {
-  index: number = 0;
-  genre: string = "pop"
-  correctHome: number=0;
-  numberOfQuestions: number = 2
   constructor() { }
-  correct: boolean[] = [false,false]
+
+  index: number = 0;
+  genre: string = "pop";
+  correctHome: number=0;
+  numberOfQuestions: number = 2;
+  correct: boolean[] = [false, false];
   
   gameOverVisible: boolean = false;
   gameCondition: boolean = false; // Example condition
@@ -82,7 +83,7 @@ export class HomeComponent implements OnInit {
         include_external: "audio"
       }
     })
-    console.log("RESPONSE : "+response)
+    console.log("RESPONSE : " + response)
     this.configLoading = false;
   }
 
@@ -123,9 +124,11 @@ export class HomeComponent implements OnInit {
     console.log(TOKEN_KEY);
   }
 
-  setSelected(value:string){
+  setSelected(value: string) {
     this.userSelection = value;
-    if(this.userSelection == this.QuizData[this.index].answer){
+    console.log(this.index)
+    console.log(this.QuizData.length)
+    if (this.userSelection == this.QuizData[this.index].answer) {
       this.correct[this.index] = true;
     }
     console.log(this.correct[this.index])

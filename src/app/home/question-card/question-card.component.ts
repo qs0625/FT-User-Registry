@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class QuestionCardComponent implements OnInit {
   @Output() selected = new EventEmitter<string>();
-  index: number = 0;
+  @Input() index: number = 0;
   @Input() data: any = [{
     img_url: "https://placehold.co/200x200",
     answer: "1",
@@ -25,12 +25,7 @@ export class QuestionCardComponent implements OnInit {
   ngOnInit(): void {
   }
   onSubmit(): void {
-    if (this.index < this.data.length) {
-      this.index++;
-      this.selected.emit(this.currentSelected);
-    }else{
-      this.index = this.index;
-    }
+    this.selected.emit(this.currentSelected);
   }
   handleSelection(value: string): void {
     this.currentSelected = value
