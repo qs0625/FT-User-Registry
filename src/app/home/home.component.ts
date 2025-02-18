@@ -17,12 +17,8 @@ export class HomeComponent implements OnInit {
 
   index: number = 0;
   genre: string = "pop";
-  correctHome: number=0;
   numberOfQuestions: number = 2;
   correct: boolean[] = [false, false];
-  
-  gameOverVisible: boolean = false;
-  gameCondition: boolean = false; // Example condition
   QuizData: any = [{
     img_url: "https://placehold.co/200x200",
     answer: "1",
@@ -39,7 +35,6 @@ export class HomeComponent implements OnInit {
   authLoading: boolean = false;
   configLoading: boolean = false;
   token: String = "";
-  results: { index: number, isCorrect: boolean }[] = [];
 
   ngOnInit(): void {
     this.authLoading = true;
@@ -132,12 +127,9 @@ export class HomeComponent implements OnInit {
       this.correct[this.index] = true;
     }
     console.log(this.correct[this.index])
-    this.index++;
-  }
-  checkGameOver() {
-    if (this.gameCondition) {
-      this.gameOverVisible = true;
+    if(this.index < this.QuizData.length - 1){
+      this.index = this.index + 1;
     }
+    console.log(this.index)
   }
-
 }
