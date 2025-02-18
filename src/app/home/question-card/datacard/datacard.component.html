@@ -1,0 +1,14 @@
+<div>
+    <h4>Who's that Arist!</h4>
+    <img src="{{data.img_url}}"/>
+
+    <span>
+        <app-audio-component></app-audio-component>
+    </span>
+    <span>
+        <span *ngFor="let option of data.options">
+        <input type="radio" name="options" id={{option}} (change)="onCheckboxChange(option, $event)">
+        <label for="optionCheckBox">{{option}}</label>
+    </span>
+    </span>
+</div>

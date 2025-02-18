@@ -1,9 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import fetchFromSpotify, { request } from "../../services/api";
 
 const AUTH_ENDPOINT =
   "https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
 const TOKEN_KEY = "whos-who-access-token";
+
+//TEST COMMENT FOR GIT
 
 @Component({
   selector: "app-home",
@@ -11,10 +13,25 @@ const TOKEN_KEY = "whos-who-access-token";
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit {
-  constructor() {}
+  constructor() { }
+
+  index: number = 0;
+  genre: string = "pop";
+  numberOfQuestions: number = 2;
+  correct: boolean[] = [false, false];
+  QuizData: any = [{
+    img_url: "https://placehold.co/200x200",
+    answer: "1",
+    options: ["1", "2", "3", "4"]
+  }, {
+    img_url: "https://placehold.co/200x200",
+    answer: "1",
+    options: ["2", "4", "6", "9"]
+  }]
 
   genres: String[] = ["House", "Alternative", "J-Rock", "R&B"];
   selectedGenre: String = "";
+  userSelection: string = "";
   authLoading: boolean = false;
   configLoading: boolean = false;
   token: String = "";
@@ -29,6 +46,7 @@ export class HomeComponent implements OnInit {
         this.authLoading = false;
         this.token = storedToken.value;
         this.loadGenres(storedToken.value);
+        //this.loadSongs(storedToken.value);
         return;
       }
     }
@@ -42,8 +60,29 @@ export class HomeComponent implements OnInit {
       this.authLoading = false;
       this.token = newToken.value;
       this.loadGenres(newToken.value);
+      //this.loadSongs(newToken.value);
     });
   }
+
+
+  loadSongs = async (t: any) => {
+    this.configLoading = true;
+
+    const response = await fetchFromSpotify({
+      token: t,
+      endpoint: "search",
+      options: {
+        q: "genre: " + this.genre,
+        limit: 15,
+        type: ["track"],
+        include_external: "audio"
+      }
+    })
+    console.log("RESPONSE : " + response)
+    this.configLoading = false;
+  }
+
+
 
   loadGenres = async (t: any) => {
     this.configLoading = true;
@@ -58,7 +97,7 @@ export class HomeComponent implements OnInit {
     // });
     // console.log(response);
     // #################################################################################
-    
+
     this.genres = [
       "rock",
       "rap",
@@ -78,5 +117,19 @@ export class HomeComponent implements OnInit {
     this.selectedGenre = selectedGenre;
     console.log(this.selectedGenre);
     console.log(TOKEN_KEY);
+  }
+
+  setSelected(value: string) {
+    this.userSelection = value;
+    console.log(this.index)
+    console.log(this.QuizData.length)
+    if (this.userSelection == this.QuizData[this.index].answer) {
+      this.correct[this.index] = true;
+    }
+    console.log(this.correct[this.index])
+    if(this.index < this.QuizData.length - 1){
+      this.index = this.index + 1;
+    }
+    console.log(this.index)
   }
 }

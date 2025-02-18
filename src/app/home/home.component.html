@@ -7,4 +7,5 @@
       {{ genre }}
     </option>
   </select>
+  <app-question-card [index]="index" [data]="QuizData" (selected)="setSelected($event)"></app-question-card>
 </div>
