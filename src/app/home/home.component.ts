@@ -15,6 +15,7 @@ const TOKEN_KEY = "whos-who-access-token";
 export class HomeComponent implements OnInit {
   index: number = 0;
   genre: string = "pop"
+  correctHome: number=0;
   numberOfQuestions: number = 2
   constructor() { }
 

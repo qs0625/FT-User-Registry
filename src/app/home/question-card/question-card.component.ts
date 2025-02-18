@@ -6,6 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./question-card.component.css']
 })
 export class QuestionCardComponent implements OnInit {
+  @Input() correct: number = 0;
   @Input() index: number = 0;
   @Input() data: any = [{
     img_url: "https://placehold.co/200x200",
