@@ -7,5 +7,9 @@
       {{ genre }}
     </option>
   </select>
+<<<<<<< HEAD
   <app-question-card [index]="index" [data]="QuizData" [correct]="correctHome"></app-question-card>
+=======
+  <app-question-card [data]="QuizData" (selected)="setSelected($event)"></app-question-card>
+>>>>>>> 43835381dc8e51ca7aa07408de0c74fc043929cb
 </div>

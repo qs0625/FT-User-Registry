@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-datacard',
@@ -11,7 +11,7 @@ export class DatacardComponent implements OnInit {
     answer: "1",
     options: ["1","2","3","4"]
   }
-
+  @Output() selectedValue = new EventEmitter<string>();
   currentSelected: string = "";
 
   constructor() { }
@@ -22,5 +22,7 @@ export class DatacardComponent implements OnInit {
   onCheckboxChange(value: string, event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
     this.currentSelected = isChecked ? value : "";
+
+    this.selectedValue.emit(this.currentSelected);
   }
 }

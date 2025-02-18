@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   correctHome: number=0;
   numberOfQuestions: number = 2
   constructor() { }
-
+  correct: boolean[] = [false,false]
   QuizData: any = [{
     img_url: "https://placehold.co/200x200",
     answer: "1",
@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
 
   genres: String[] = ["House", "Alternative", "J-Rock", "R&B"];
   selectedGenre: String = "";
+  userSelection: string = "";
   authLoading: boolean = false;
   configLoading: boolean = false;
   token: String = "";
@@ -116,5 +117,14 @@ export class HomeComponent implements OnInit {
     this.selectedGenre = selectedGenre;
     console.log(this.selectedGenre);
     console.log(TOKEN_KEY);
+  }
+
+  setSelected(value:string){
+    this.userSelection = value;
+    if(this.userSelection == this.QuizData[this.index].answer){
+      this.correct[this.index] = true;
+    }
+    console.log(this.correct[this.index])
+    this.index++;
   }
 }
