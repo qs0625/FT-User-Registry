@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import fetchFromSpotify, { request } from "../../services/api";
 
 const AUTH_ENDPOINT =
@@ -13,13 +13,16 @@ const TOKEN_KEY = "whos-who-access-token";
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit {
-  constructor() {}
+  index: number = 0;
+  genre: string = "pop"
+  numberOfQuestions: number = 2
+  constructor() { }
 
   QuizData: any = [{
     img_url: "https://placehold.co/200x200",
     answer: "1",
     options: ["1", "2", "3", "4"]
-  },{
+  }, {
     img_url: "https://placehold.co/200x200",
     answer: "1",
     options: ["2", "4", "6", "9"]
@@ -41,6 +44,7 @@ export class HomeComponent implements OnInit {
         this.authLoading = false;
         this.token = storedToken.value;
         this.loadGenres(storedToken.value);
+        //this.loadSongs(storedToken.value);
         return;
       }
     }
@@ -54,8 +58,29 @@ export class HomeComponent implements OnInit {
       this.authLoading = false;
       this.token = newToken.value;
       this.loadGenres(newToken.value);
+      //this.loadSongs(newToken.value);
     });
   }
+
+
+  loadSongs = async (t: any) => {
+    this.configLoading = true;
+
+    const response = await fetchFromSpotify({
+      token: t,
+      endpoint: "search",
+      options: {
+        q: "genre: " + this.genre,
+        limit: 15,
+        type: ["track"],
+        include_external: "audio"
+      }
+    })
+    console.log("RESPONSE : "+response)
+    this.configLoading = false;
+  }
+
+
 
   loadGenres = async (t: any) => {
     this.configLoading = true;
@@ -70,7 +95,7 @@ export class HomeComponent implements OnInit {
     // });
     // console.log(response);
     // #################################################################################
-    
+
     this.genres = [
       "rock",
       "rap",
