@@ -132,4 +132,16 @@ export class HomeComponent implements OnInit {
     }
     console.log(this.index)
   }
+  settingsSubmitted: boolean = true;
+  config: any = {
+    genre: "pop",
+    year: "2010-2019",
+    artist: "",
+    questions: 2
+  }
+  loadConfig(state: any):void{
+    this.config = state
+    console.log(this.config)
+    this.settingsSubmitted = false;
+  }
 }
