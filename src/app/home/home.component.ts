@@ -32,6 +32,11 @@ export class HomeComponent implements OnInit {
   genres: String[] = ["House", "Alternative", "J-Rock", "R&B"];
   selectedGenre: String = "";
   userSelection: string = "";
+  userSelections: string[] = [];
+  answerKey: any = {
+    choices: this.userSelections,
+   answers: this.QuizData.map((item: { answer: any; }) => item.answer)
+   }
   authLoading: boolean = false;
   configLoading: boolean = false;
   token: String = "";
@@ -121,6 +126,8 @@ export class HomeComponent implements OnInit {
 
   setSelected(value: string) {
     this.userSelection = value;
+    this.userSelections[this.index] = value; // Add index selcection for answerKey 
+
     console.log(this.index)
     console.log(this.QuizData.length)
     if (this.userSelection == this.QuizData[this.index].answer) {
@@ -143,5 +150,9 @@ export class HomeComponent implements OnInit {
     this.config = state
     console.log(this.config)
     this.settingsSubmitted = false;
+    this.showQuestions = true;
   }
+  showQuestions: boolean = false;
+
+
 }
