@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit {
         this.authLoading = false;
         this.token = storedToken.value;
         this.loadGenres(storedToken.value);
-        //this.loadSongs(storedToken.value);
+        this.loadSongs(storedToken.value);
         return;
       }
     }
@@ -86,7 +86,7 @@ export class HomeComponent implements OnInit {
     const response = await fetchFromSpotify({
       token: t,
       endpoint: "search",
-      options: {
+      params: {
         q: "genre: " + this.genre,
         limit: 15,
         type: ["track"],
