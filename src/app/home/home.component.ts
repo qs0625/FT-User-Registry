@@ -33,13 +33,20 @@ export class HomeComponent implements OnInit {
   selectedGenre: String = "";
   userSelection: string = "";
   userSelections: string[] = [];
+
   answerKey: any = {
+    questions: ['What is the capital of France?', 'What is 2 + 2?','Who wrote "To Kill a Mockingbird"?' ],
     choices: this.userSelections,
-   answers: this.QuizData.map((item: { answer: any; }) => item.answer)
+    answers: this.QuizData.map((item: { answer: any; }) => item.answer)
    }
+   
   authLoading: boolean = false;
   configLoading: boolean = false;
   token: String = "";
+
+
+
+/*         Init         */
 
   ngOnInit(): void {
     this.authLoading = true;
@@ -70,6 +77,9 @@ export class HomeComponent implements OnInit {
   }
 
 
+
+/*         Load Songs         */
+
   loadSongs = async (t: any) => {
     this.configLoading = true;
 
@@ -88,6 +98,7 @@ export class HomeComponent implements OnInit {
   }
 
 
+/*         Load Genres         */
 
   loadGenres = async (t: any) => {
     this.configLoading = true;
@@ -118,6 +129,10 @@ export class HomeComponent implements OnInit {
     this.configLoading = false;
   };
 
+
+
+/*         Set Genres         */
+
   setGenre(selectedGenre: any) {
     this.selectedGenre = selectedGenre;
     console.log(this.selectedGenre);
@@ -127,6 +142,7 @@ export class HomeComponent implements OnInit {
   setSelected(value: string) {
     this.userSelection = value;
     this.userSelections[this.index] = value; // Add index selcection for answerKey 
+    
 
     console.log(this.index)
     console.log(this.QuizData.length)
@@ -137,6 +153,8 @@ export class HomeComponent implements OnInit {
     if(this.index < this.QuizData.length - 1){
       this.index = this.index + 1;
     }
+    console.log(this.answerKey);
+
     console.log(this.index)
   }
   settingsSubmitted: boolean = true;
@@ -146,13 +164,19 @@ export class HomeComponent implements OnInit {
     artist: "",
     questions: 2
   }
-  loadConfig(state: any):void{
+  loadConfig(state: any):void{ // load game configuration settings
     this.config = state
     console.log(this.config)
     this.settingsSubmitted = false;
     this.showQuestions = true;
   }
+
+  updateAnswerKey(newData: any) {
+    this.answerKey = newData;
+  }
   showQuestions: boolean = false;
+  endGame: boolean = false;
+
 
 
 }

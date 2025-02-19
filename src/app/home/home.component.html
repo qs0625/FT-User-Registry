@@ -2,4 +2,6 @@
 <div *ngIf="!authLoading && !configLoading">
   <app-config-component [show]="settingsSubmitted" (config)="loadConfig($event)"></app-config-component>
   <app-question-card [show]="showQuestions" [index]="index" [data]="QuizData" (selected)="setSelected($event)"></app-question-card>
+  <app-answerkey [answerKey]="answerKey" (answerKeyUpdated)="updateAnswerKey($event)"></app-answerkey>
+  <app-gameover [visible]="endGame"></app-gameover>
 </div>
