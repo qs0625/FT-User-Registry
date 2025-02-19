@@ -14,7 +14,12 @@ const TOKEN_KEY = "whos-who-access-token";
 })
 export class HomeComponent implements OnInit {
   constructor() { }
-
+  data: any = {
+    artist: [],
+    album: [],
+    images: [],
+    trackName: []
+  }
   index: number = 0;
   genre: string = "pop";
   numberOfQuestions: number = 2;
@@ -25,7 +30,7 @@ export class HomeComponent implements OnInit {
     options: ["1", "2", "3", "4"]
   }, {
     img_url: "https://placehold.co/200x200",
-    answer: "1",
+    answer: "6",
     options: ["2", "4", "6", "9"]
   }]
 
@@ -35,18 +40,18 @@ export class HomeComponent implements OnInit {
   userSelections: string[] = [];
 
   answerKey: any = {
-    questions: ['What is the capital of France?', 'What is 2 + 2?','Who wrote "To Kill a Mockingbird"?' ],
+    questions: ['What is the capital of France?', 'What is 2 + 2?', 'Who wrote "To Kill a Mockingbird"?'],
     choices: this.userSelections,
     answers: this.QuizData.map((item: { answer: any; }) => item.answer)
-   }
-   
+  }
+
   authLoading: boolean = false;
   configLoading: boolean = false;
   token: String = "";
 
 
 
-/*         Init         */
+  /*         Init         */
 
   ngOnInit(): void {
     this.authLoading = true;
@@ -78,7 +83,7 @@ export class HomeComponent implements OnInit {
 
 
 
-/*         Load Songs         */
+  /*         Load Songs         */
 
   loadSongs = async (t: any) => {
     this.configLoading = true;
@@ -88,17 +93,38 @@ export class HomeComponent implements OnInit {
       endpoint: "search",
       params: {
         q: "genre: " + this.genre,
-        limit: 15,
+        limit: 50,
+        offset: 0,
         type: ["track"],
-        include_external: "audio"
+        market: "US",
       }
     })
-    console.log("RESPONSE : " + response)
+    this.processSongs(response)
     this.configLoading = false;
+  }
+  processSongs = (res: any) => {
+    let tracks = res.tracks.items
+    console.log(tracks)
+    let artist: any[] = [];
+    let album: any[] = [];
+    let images: any[] = [];
+    let trackName: any[] = [];
+    let index = 0;
+    for (let item of tracks) {
+      artist[index] = item.artists[0].name
+      album[index] = item.album.name
+      images[index] = item.album.images[1].url
+      trackName[index] = item.name
+      index++;
+    }
+    this.data.album = album;
+    this.data.artist = artist;
+    this.data.images = images;
+    this.data.trackName;
   }
 
 
-/*         Load Genres         */
+  /*         Load Genres         */
 
   loadGenres = async (t: any) => {
     this.configLoading = true;
@@ -131,7 +157,7 @@ export class HomeComponent implements OnInit {
 
 
 
-/*         Set Genres         */
+  /*         Set Genres         */
 
   setGenre(selectedGenre: any) {
     this.selectedGenre = selectedGenre;
@@ -142,15 +168,12 @@ export class HomeComponent implements OnInit {
   setSelected(value: string) {
     this.userSelection = value;
     this.userSelections[this.index] = value; // Add index selcection for answerKey 
-    
 
-    console.log(this.index)
-    console.log(this.QuizData.length)
+
     if (this.userSelection == this.QuizData[this.index].answer) {
       this.correct[this.index] = true;
     }
-    console.log(this.correct[this.index])
-    if(this.index < this.QuizData.length - 1){
+    if (this.index < this.QuizData.length - 1) {
       this.index = this.index + 1;
     }
     console.log(this.answerKey);
@@ -164,7 +187,7 @@ export class HomeComponent implements OnInit {
     artist: "",
     questions: 2
   }
-  loadConfig(state: any):void{ // load game configuration settings
+  loadConfig(state: any): void { // load game configuration settings
     this.config = state
     console.log(this.config)
     this.settingsSubmitted = false;
@@ -176,7 +199,5 @@ export class HomeComponent implements OnInit {
   }
   showQuestions: boolean = false;
   endGame: boolean = false;
-
-
 
 }
