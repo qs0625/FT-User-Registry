@@ -1,2 +1,7 @@
-<button (click)="checkGameOver()">Check Game Over</button>
-<app-gameover [visible]="gameOverVisible"></app-gameover>
+<div *ngIf="visible">
+    <div class="game-over">
+        <h1>Game Over</h1>
+        <p>Thank you for playing!</p>
+        <button (click)="handlePlayAgain()">Play Again</button>
+    </div>
+</div>  

@@ -5,24 +5,15 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
   templateUrl: './gameover.component.html',
   styleUrls: ['./gameover.component.css']
 })
-export class GameOverComponent implements OnChanges {
-gameOverVisible: boolean = true;
-checkGameOver() {
-throw new Error('Method not implemented.');
-}
+export class GameOverComponent implements OnInit {
+
+
   ngOnInit(): void {
   }
   @Input() visible: boolean = false;
+  handlePlayAgain() {
+    throw new Error('Method not implemented.');
+    }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['visible']) {
-      const element = document.querySelector('.game-over');
-      if(element)
-        if (this.visible) {
-          element.classList.add('visible');
-        } else {
-          element.classList.remove('visible');
-        }
-      }
-  }
 }
+
