@@ -1,7 +1,7 @@
 <body>
   <div *ngIf="visible" class="answer-key-container">
     <h2>Answer Key</h2>
-    <div *ngFor="let key of answerKey.questions; let i = index" class="question-block">
+    <div *ngFor="let key of answerKey.answers; let i = index" class="question-block">
       <p class="question">Question: {{ answerKey.questions[i] }}</p>
       <p class="answer">Answer: {{ answerKey.answers[i] }}</p>
       <p class="choice">Choice: {{ answerKey.choices[i] }}</p>
