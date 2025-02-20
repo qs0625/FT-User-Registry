@@ -20,8 +20,6 @@ export class QuestionCardComponent implements OnInit {
   @Input() show: boolean = false;
   currentSelected: string = "";
 
-
-
   constructor() { }
 
   ngOnInit(): void {
