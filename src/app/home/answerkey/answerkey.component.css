@@ -14,10 +14,14 @@ body {
     border-radius: 8px;
   }
   .answer-key-container h2 {
+    font-family: myFirstFont;
     text-align: center;
-    color: #4a90e2;
+    font-size: 36px;
+    color: #333;
   }
   .question-block {
+    display: flex;
+    justify-content: center;
     border-bottom: 1px solid #ddd;
     padding: 10px 0;
   }
@@ -25,7 +29,9 @@ body {
     border-bottom: none;
   }
   .question-block p {
-    margin: 5px 0;
+    border: 2px;
+    border-color: #333;
+    margin-right: 5px;
   }
   .question-block p.question {
     font-weight: bold;
@@ -33,3 +39,7 @@ body {
   .question-block p.answer {
     color: #4a90e2;
   }
+  @font-face {
+    font-family: myFirstFont;
+    src: url(src/assets/fonts/MusicalTone-7BJ4A.otf);
+}

@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
   userSelections: string[] = [];
   correctAnswers: string[] = [];
   arrayOfIndexes: number[] = [];
+  gameScore: number = 0
 
   answerKey: any = {
     questions: this.arrayOfIndexes,
@@ -177,6 +178,7 @@ export class HomeComponent implements OnInit {
 
     if (this.userSelection == this.QuizData[this.index].answer) {
       this.correct[this.index] = true;
+      this.gameScore += 100;
     }
     if (this.index < this.QuizData.length - 1) {
       this.index = this.index + 1;
@@ -227,6 +229,7 @@ export class HomeComponent implements OnInit {
       answers: this.correctAnswers=[]
     }
     this.QuizData=[];
+    this.gameScore=0;
 
 
   }
