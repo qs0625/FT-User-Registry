@@ -80,7 +80,7 @@ export class HomeComponent implements OnInit {
       token: t,
       endpoint: "search",
       params: {
-        q: "." + "&genre:" + this.config.genre + "&year:" + this.config.year,
+        q: "." + "genre:" + this.config.genre + "year:" + this.config.year,
         limit: 50,
         offset: 0,
         type: ["track"],
