@@ -8,9 +8,19 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class ConfigComponentComponent implements OnInit {
   selectedGenre: String = "";
   selectedYear: String = "";
-  currentArtist: String = "";
   currentQuestions: number = 2;
-  genres: String[] = ["House", "Alternative", "J-Rock", "R&B"];
+  genres: String[] = [
+    "rock",
+    "rap",
+    "pop",
+    "country",
+    "hip-hop",
+    "jazz",
+    "alternative",
+    "j-pop",
+    "k-pop",
+    "emo"
+  ];
 
 
   constructor() { }
@@ -26,9 +36,6 @@ export class ConfigComponentComponent implements OnInit {
   setYear(selectedYear: any) {
     this.selectedYear = selectedYear;
   }
-  setArtist(selectedArtist: any) {
-    this.currentArtist = selectedArtist;
-  }
   setQuestions(numberQuestions:any){
     this.currentQuestions = numberQuestions;
   }
@@ -37,7 +44,6 @@ export class ConfigComponentComponent implements OnInit {
     this.config.emit({
       genre: this.selectedGenre,
       year: this.selectedYear,
-      artist: this.currentArtist,
       questions: this.currentQuestions
     })
   }

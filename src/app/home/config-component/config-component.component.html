@@ -8,14 +8,6 @@
     </option>
   </select>
 
-  <label for="album">Album:</label>
-  <input [(ngModel)]="currentArtist" (ngModelChange)="setArtist($event)" type="text" id="album" name="album" />
-  <br />
-
-  <label for="artist">Artist:</label>
-  <input type="text" id="artist" name="artist" />
-  <br />
-
   <label for="year">Year Range:</label>
   <select
     [(ngModel)]="selectedYear"

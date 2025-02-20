@@ -14,35 +14,20 @@ const TOKEN_KEY = "whos-who-access-token";
 })
 export class HomeComponent implements OnInit {
   constructor() { }
-  data: any = {
-    artist: [],
-    album: [],
-    images: [],
-    trackName: []
-  }
   index: number = 0;
   genre: string = "pop";
   numberOfQuestions: number = 2;
   correct: boolean[] = [false, false];
-  QuizData: any = [{
-    img_url: "https://placehold.co/200x200",
-    answer: "1",
-    options: ["1", "2", "3", "4"]
-  }, {
-    img_url: "https://placehold.co/200x200",
-    answer: "6",
-    options: ["2", "4", "6", "9"]
-  }]
-
-  genres: String[] = ["House", "Alternative", "J-Rock", "R&B"];
+  QuizData: any = [];
   selectedGenre: String = "";
   userSelection: string = "";
   userSelections: string[] = [];
+  correctAnswers: string[] = [];
 
   answerKey: any = {
     questions: ['What is the capital of France?', 'What is 2 + 2?', 'Who wrote "To Kill a Mockingbird"?'],
     choices: this.userSelections,
-    answers: this.QuizData.map((item: { answer: any; }) => item.answer)
+    answers: this.correctAnswers
   }
 
   authLoading: boolean = false;
@@ -63,7 +48,6 @@ export class HomeComponent implements OnInit {
         this.authLoading = false;
         this.token = storedToken.value;
         this.loadGenres(storedToken.value);
-        this.loadSongs(storedToken.value);
         return;
       }
     }
@@ -77,7 +61,7 @@ export class HomeComponent implements OnInit {
       this.authLoading = false;
       this.token = newToken.value;
       this.loadGenres(newToken.value);
-      //this.loadSongs(newToken.value);
+      this.loadSongs(newToken.value);
     });
   }
 
@@ -92,7 +76,7 @@ export class HomeComponent implements OnInit {
       token: t,
       endpoint: "search",
       params: {
-        q: "genre: " + this.genre,
+        q: "." + "&genre:" + this.config.genre + "&year:" + this.config.year,
         limit: 50,
         offset: 0,
         type: ["track"],
@@ -117,12 +101,27 @@ export class HomeComponent implements OnInit {
       trackName[index] = item.name
       index++;
     }
-    this.data.album = album;
-    this.data.artist = artist;
-    this.data.images = images;
-    this.data.trackName;
+    for (let i = 0; i < this.numberOfQuestions; i++) {
+      let correctIndex = this.randIndex(album)
+      let temp = {
+        img_url: images.at(correctIndex),
+        answer: album.at(correctIndex),
+        options: this.getRandomOptions([album.at(correctIndex)],album,album.at(correctIndex))
+      }
+      this.correctAnswers[i] = temp.answer
+      this.QuizData = [...this.QuizData, temp]
+    }
   }
-
+  randIndex = (arr: any[]) => Math.floor(Math.random() * arr.length)
+  getRandomOptions(arr: string[],possiblities:string[],answer:string): string[]{
+    if(arr.length == 4){return arr}
+    let options: string[] = arr;
+    let temp:string = possiblities.at(this.randIndex(possiblities)) ?? "NULL"
+    while(options.includes(temp) && temp == answer){
+      temp = possiblities.at(this.randIndex(possiblities)) ?? "NULL"
+    }
+    return this.getRandomOptions([...arr,temp],possiblities,answer)
+  }
 
   /*         Load Genres         */
 
@@ -140,7 +139,7 @@ export class HomeComponent implements OnInit {
     // console.log(response);
     // #################################################################################
 
-    this.genres = [
+    let genres = [
       "rock",
       "rap",
       "pop",
@@ -190,6 +189,9 @@ export class HomeComponent implements OnInit {
   loadConfig(state: any): void { // load game configuration settings
     this.config = state
     console.log(this.config)
+    this.genre = this.config.genre
+    this.numberOfQuestions = this.config.questions
+    this.loadSongs(this.token);
     this.settingsSubmitted = false;
     this.showQuestions = true;
   }
