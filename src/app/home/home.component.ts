@@ -174,6 +174,10 @@ export class HomeComponent implements OnInit {
     }
     if (this.index < this.QuizData.length - 1) {
       this.index = this.index + 1;
+    } 
+    if(this.index === this.userSelections.length-1){
+      this.endGame = true;
+
     }
     console.log(this.answerKey);
 
