@@ -11,11 +11,12 @@ import { AudioComponentComponent } from './home/question-card/datacard/audio-com
 import { QuestionCardComponent } from './home/question-card/question-card.component';
 import { GameOverComponent } from './gameover/gameover.component';
 import { ConfigComponentComponent } from "./home/config-component/config-component.component";
+import { LeaderboardComponent } from './home/leaderboard/leaderboard.component';
 
 const routes: Routes = [{ path: "", component: HomeComponent }];
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, DatacardComponent, AnswerkeyComponent, AudioComponentComponent, QuestionCardComponent, GameOverComponent,ConfigComponentComponent],
+  declarations: [AppComponent, HomeComponent, DatacardComponent, AnswerkeyComponent, AudioComponentComponent, QuestionCardComponent, GameOverComponent,ConfigComponentComponent, LeaderboardComponent],
   imports: [BrowserModule, FormsModule, RouterModule.forRoot(routes)],
   providers: [],
   bootstrap: [AppComponent],
