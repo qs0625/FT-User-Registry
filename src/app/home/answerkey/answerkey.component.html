@@ -1,12 +1,10 @@
-<div class="answer-key-container">
-  <h2>Answer Key</h2>
-  <div *ngFor="let key of answerKey.questions; let i = index">
-    
-    <p>question:{{ answerKey.questions[i]}}</p>
-    <p>answer:{{ answerKey.answers[i]}}</p>
-    <p>choice:{{ answerKey.choices[i]}}</p>
-
-
-
+<body>
+  <div *ngIf="visible" class="answer-key-container">
+    <h2>Answer Key</h2>
+    <div *ngFor="let key of answerKey.questions; let i = index" class="question-block">
+      <p class="question">Question: {{ answerKey.questions[i] }}</p>
+      <p class="answer">Answer: {{ answerKey.answers[i] }}</p>
+      <p class="choice">Choice: {{ answerKey.choices[i] }}</p>
+    </div>
   </div>
-</div>
+</body>

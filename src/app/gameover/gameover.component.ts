@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-gameover',
@@ -11,9 +11,16 @@ export class GameOverComponent implements OnInit {
   ngOnInit(): void {
   }
   @Input() visible: boolean = false;
-  handlePlayAgain() {
-    throw new Error('Method not implemented.');
+ 
+  @Output() replay = new EventEmitter<void>();
+  @Output() showAns = new EventEmitter<void>();
+
+  playAgain(){
+    this.replay.emit();
     }
+  displayAnswers(){
+    this.showAns.emit()
+  }
 
 }
 
