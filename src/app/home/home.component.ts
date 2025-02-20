@@ -25,9 +25,11 @@ export class HomeComponent implements OnInit {
   userSelection: string = "";
   userSelections: string[] = [];
   correctAnswers: string[] = [];
+  arrayOfIndexes: number[] = [];
+  gameScore: number = 0
 
   answerKey: any = {
-    questions: ['What is the capital of France?', 'What is 2 + 2?', 'Who wrote "To Kill a Mockingbird"?'],
+    questions: this.arrayOfIndexes,
     choices: this.userSelections,
     answers: this.correctAnswers
   }
@@ -171,10 +173,12 @@ export class HomeComponent implements OnInit {
   setSelected(value: string) {
     this.userSelection = value;
     this.userSelections[this.index] = value; // Add index selcection for answerKey 
+    this.arrayOfIndexes[this.index] = this.index+1
 
 
     if (this.userSelection == this.QuizData[this.index].answer) {
       this.correct[this.index] = true;
+      this.gameScore += 100;
     }
     if (this.index < this.QuizData.length - 1) {
       this.index = this.index + 1;
@@ -220,11 +224,12 @@ export class HomeComponent implements OnInit {
 
     this.index=0;
     this.answerKey= {
-      questions: ['What is the capital of France?', 'What is 2 + 2?', 'Who wrote "To Kill a Mockingbird"?'],
+      questions: this.arrayOfIndexes=[],
       choices: this.userSelections=[],
       answers: this.correctAnswers=[]
     }
     this.QuizData=[];
+    this.gameScore=0;
 
 
   }

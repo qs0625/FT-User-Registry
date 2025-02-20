@@ -11,7 +11,8 @@ export class GameOverComponent implements OnInit {
   ngOnInit(): void {
   }
   @Input() visible: boolean = false;
- 
+  @Input() score: number = 0;
+
   @Output() replay = new EventEmitter<void>();
   @Output() showAns = new EventEmitter<void>();
 
