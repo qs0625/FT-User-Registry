@@ -8,7 +8,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class AnswerkeyComponent implements OnInit {
   @Input() answerKey: any;
+  @Input() visible: boolean = false;
   @Output() answerKeyUpdated = new EventEmitter<any>();
+
   constructor() { }
 
   ngOnInit(): void {

@@ -13,7 +13,9 @@ const TOKEN_KEY = "whos-who-access-token";
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit {
+
   constructor() { }
+
   index: number = 0;
   genre: string = "pop";
   numberOfQuestions: number = 2;
@@ -32,9 +34,11 @@ export class HomeComponent implements OnInit {
 
   authLoading: boolean = false;
   configLoading: boolean = false;
+  showAnswers: boolean = false;
+
   token: String = "";
 
-
+  
 
   /*         Init         */
 
@@ -206,4 +210,28 @@ export class HomeComponent implements OnInit {
   showQuestions: boolean = false;
   endGame: boolean = false;
 
+  replayGame(){
+
+    console.log('Play Again event received');
+
+    this.endGame = false;
+    this.settingsSubmitted=true;
+    this.showQuestions=false;
+
+    this.index=0;
+    this.answerKey= {
+      questions: ['What is the capital of France?', 'What is 2 + 2?', 'Who wrote "To Kill a Mockingbird"?'],
+      choices: this.userSelections=[],
+      answers: this.correctAnswers=[]
+    }
+    this.QuizData=[];
+
+
+  }
+  answersKey(){
+    this.endGame = false;
+    this.showQuestions=false;
+    this.showAnswers=true;
+  }
+ 
 }
