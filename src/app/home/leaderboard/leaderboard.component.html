@@ -1,4 +1,5 @@
 <div *ngIf="visible">
+    <header>LEADERBOARD</header>
     <div class="leaderboard-container" *ngIf="data.length > 0">
         <span  *ngFor="let user of data">
             <h4>{{user.name}}</h4>

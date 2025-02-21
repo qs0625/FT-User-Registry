@@ -2,11 +2,12 @@
   <div *ngIf="visible" class="answer-key-container">
     <h2>Answer Key</h2>
     <div *ngFor="let key of answerKey.answers; let i = index" class="question-block">
-      <p class="question">Question    {{ answerKey.questions[i] }}</p>
+      <p class="question">Question:    {{ answerKey.questions[i] }}</p>
       <br>
-      <p class="answer">Answer    {{ answerKey.answers[i] }}</p>
+      <p class="answer">Answer:    {{ answerKey.answers[i] }}</p>
       <br>
-      <p class="choice">Choice   {{ answerKey.choices[i] }}</p>
+      
+      <p [ngClass]="{'correct': answerKey.answers[i] === answerKey.choices[i], 'incorrect':  answerKey.answers[i] !== answerKey.choices[i]}">Choice: {{ answerKey.choices[i] }}</p>
     </div>
   </div>
 </body>
