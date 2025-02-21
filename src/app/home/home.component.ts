@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
 
   showLeaderBoard: boolean= false;
   buttonVisible: boolean = true;
+  showSubmit: boolean = true;
 
   toggleLeaderboard() {
     if(!this.showLeaderBoard){
@@ -255,6 +256,7 @@ export class HomeComponent implements OnInit {
     this.settingsSubmitted=true;
     this.showQuestions=false;
     this.buttonVisible=true;
+    this.showSubmit=true;
 
     this.index=0;
     this.answerKey= {
@@ -275,5 +277,6 @@ export class HomeComponent implements OnInit {
   }
   handleInputValue(username: string) {
     this.username = username;
+    this.showSubmit = false;
     }
 }

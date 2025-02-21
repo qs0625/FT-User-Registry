@@ -12,6 +12,7 @@ export class GameOverComponent implements OnInit {
   }
   @Input() visible: boolean = false;
   @Input() score: number = 0;
+  @Input() submitDone: boolean = true;
 
   @Output() replay = new EventEmitter<void>();
   @Output() showAns = new EventEmitter<void>();
