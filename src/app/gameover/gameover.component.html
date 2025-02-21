@@ -3,6 +3,10 @@
         <h1>Game Over</h1>
         <p>Thank you for playing!</p>
         <p>Score was {{score}}</p>
+        <div class="userScore">
+            <input type="text" [(ngModel)]="userInput" placeholder="Enter your name">
+            <button (click)="handleSubmit()">Submit</button>
+        </div>
         <button (click)="playAgain()">Play Again</button>
         <button (click)="displayAnswers()">Show Answers</button>
     </div>

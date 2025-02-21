@@ -15,12 +15,18 @@ export class GameOverComponent implements OnInit {
 
   @Output() replay = new EventEmitter<void>();
   @Output() showAns = new EventEmitter<void>();
+  @Output() inputValue = new EventEmitter<string>();
+
+  userInput: string = '';
 
   playAgain(){
     this.replay.emit();
     }
   displayAnswers(){
     this.showAns.emit()
+  }
+  handleSubmit() {
+    this.inputValue.emit(this.userInput);
   }
 
 }

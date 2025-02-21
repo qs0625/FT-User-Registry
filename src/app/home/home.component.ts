@@ -14,6 +14,20 @@ const TOKEN_KEY = "whos-who-access-token";
 })
 export class HomeComponent implements OnInit {
 
+
+  showLeaderBoard: boolean= false;
+  toggleLeaderboard() {
+    if(!this.showLeaderBoard){
+      this.showLeaderBoard=true;
+      this.settingsSubmitted=false;
+    }
+    else{
+      this.showLeaderBoard=false;
+      this.settingsSubmitted=true;
+    }
+
+  }
+
   constructor() { }
 
   index: number = 0;
@@ -33,6 +47,19 @@ export class HomeComponent implements OnInit {
     choices: this.userSelections,
     answers: this.correctAnswers
   }
+
+  leaderboardList: any =[{
+    name: "NAME 1",
+    score: 100
+  },{
+    name: "NAME 2",
+    score: 200
+  },{
+    name: "NAME 3",
+    score: 300
+  }].sort( (a,b) => {
+    return b.score - a.score;
+  })
 
   authLoading: boolean = false;
   configLoading: boolean = false;
@@ -237,6 +264,9 @@ export class HomeComponent implements OnInit {
     this.endGame = false;
     this.showQuestions=false;
     this.showAnswers=true;
+    this.showLeaderBoard=false;
   }
- 
+  handleInputValue($event: string) {
+    throw new Error('Method not implemented.');
+    }
 }
