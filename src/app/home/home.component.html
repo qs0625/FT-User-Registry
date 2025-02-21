@@ -1,6 +1,6 @@
 <div *ngIf="authLoading || configLoading">Loading...</div>
 <div *ngIf="!authLoading && !configLoading">
-  <button (click)="toggleLeaderboard()">
+  <button *ngIf="buttonVisible" (click)="toggleLeaderboard()">
     <img src="src/assets/images/Leaderboard.png" alt="Leaderboard">
   </button>
   <app-config-component [show]="settingsSubmitted" (config)="loadConfig($event)"></app-config-component>

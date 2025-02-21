@@ -16,6 +16,8 @@ export class HomeComponent implements OnInit {
 
 
   showLeaderBoard: boolean= false;
+  buttonVisible: boolean = true;
+
   toggleLeaderboard() {
     if(!this.showLeaderBoard){
       this.showLeaderBoard=true;
@@ -40,7 +42,8 @@ export class HomeComponent implements OnInit {
   userSelections: string[] = [];
   correctAnswers: string[] = [];
   arrayOfIndexes: number[] = [];
-  gameScore: number = 0
+  gameScore: number = 0;
+  username = '';
 
   answerKey: any = {
     questions: this.arrayOfIndexes,
@@ -48,19 +51,10 @@ export class HomeComponent implements OnInit {
     answers: this.correctAnswers
   }
 
-  leaderboardList: any =[{
-    name: "NAME 1",
-    score: 100
-  },{
-    name: "NAME 2",
-    score: 200
-  },{
-    name: "NAME 3",
-    score: 300
-  }].sort( (a,b) => {
+  leaderboardList: any =[{}];/*.sort( (a,b) => {
     return b.score - a.score;
   })
-
+*/
   authLoading: boolean = false;
   configLoading: boolean = false;
   showAnswers: boolean = false;
@@ -245,9 +239,15 @@ export class HomeComponent implements OnInit {
 
     console.log('Play Again event received');
 
+
+    this.leaderboardList.push({name: this.username, score:this.gameScore});
+
+    this.leaderboardList.sort((a: { score: number; }, b: { score: number; }) => b.score - a.score);
+
     this.endGame = false;
     this.settingsSubmitted=true;
     this.showQuestions=false;
+    this.buttonVisible=true;
 
     this.index=0;
     this.answerKey= {
@@ -264,9 +264,9 @@ export class HomeComponent implements OnInit {
     this.endGame = false;
     this.showQuestions=false;
     this.showAnswers=true;
-    this.showLeaderBoard=false;
+    this.buttonVisible=false;
   }
-  handleInputValue($event: string) {
-    throw new Error('Method not implemented.');
+  handleInputValue(username: string) {
+    this.username = username;
     }
 }
