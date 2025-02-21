@@ -39,6 +39,10 @@ body {
     border-bottom: 1px solid #ddd;
     padding: 10px 0;
   }
+ .q-img img{
+    border: 4px;
+    border-color: black;
+ }
   .question-block:last-child {
     border-bottom: none;
   }
@@ -53,6 +57,7 @@ body {
   .question-block p.answer {
     color: #4A90E2;
   }
+  
   @font-face {
     font-family: myFirstFont;
     src: url(src/assets/fonts/MusicalTone-7BJ4A.otf);

@@ -2,7 +2,11 @@
   <div *ngIf="visible" class="answer-key-container">
     <h2>Answer Key</h2>
     <div *ngFor="let key of answerKey.answers; let i = index" class="question-block">
-      <p class="question">Question:    {{ answerKey.questions[i] }}</p>
+      <div class="q-img">
+          <p class="question">Question:</p>
+         <img src="{{ dataQuiz[i].img_url }}">
+      </div>
+      
       <br>
       <p class="answer">Answer:    {{ answerKey.answers[i] }}</p>
       <br> 

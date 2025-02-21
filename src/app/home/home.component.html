@@ -5,7 +5,7 @@
   </button>
   <app-config-component [show]="settingsSubmitted" (config)="loadConfig($event)"></app-config-component>
   <app-question-card [show]="showQuestions" [index]="index" [data]="QuizData" (selected)="setSelected($event)"></app-question-card>
-  <app-answerkey (answerKeyUpdated)="replayGame()" [visible]="showAnswers" [answerKey]="answerKey"></app-answerkey>
+  <app-answerkey (answerKeyUpdated)="replayGame()" [visible]="showAnswers" [answerKey]="answerKey" [dataQuiz]="QuizData"></app-answerkey>
   <app-gameover [submitDone]="showSubmit" (showAns)="answersKey()" [visible]="endGame" [score]="gameScore" (replay)="replayGame()" (inputValue)="handleInputValue($event)"></app-gameover>
   
 
