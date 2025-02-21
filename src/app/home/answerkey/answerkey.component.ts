@@ -18,5 +18,8 @@ export class AnswerkeyComponent implements OnInit {
 
   }
 
- 
+  onHome(){
+    //console.log(this.answerKey)
+    this.answerKeyUpdated.emit(true)
+  }
 }
