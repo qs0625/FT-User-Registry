@@ -44,7 +44,13 @@ export class HomeComponent implements OnInit {
   arrayOfIndexes: number[] = [];
   gameScore: number = 0;
   username = '';
-
+  settingsSubmitted: boolean = true;
+  config: any = {
+    genre: "pop",
+    year: "2010-2019",
+    artist: "",
+    questions: 2
+  }
   answerKey: any = {
     questions: this.arrayOfIndexes,
     choices: this.userSelections,
@@ -58,6 +64,8 @@ export class HomeComponent implements OnInit {
   authLoading: boolean = false;
   configLoading: boolean = false;
   showAnswers: boolean = false;
+  showQuestions: boolean = false;
+  endGame: boolean = false;
 
   token: String = "";
 
@@ -89,7 +97,6 @@ export class HomeComponent implements OnInit {
       this.authLoading = false;
       this.token = newToken.value;
       this.loadGenres(newToken.value);
-      this.loadSongs(newToken.value);
     });
   }
 
@@ -141,15 +148,17 @@ export class HomeComponent implements OnInit {
     }
   }
   randIndex = (arr: any[]) => Math.floor(Math.random() * arr.length)
-  getRandomOptions(arr: string[],possiblities:string[],answer:string): string[]{
-    if(arr.length == 4){return arr}
-    let options: string[] = arr;
-    let temp:string = possiblities.at(this.randIndex(possiblities)) ?? "NULL"
-    while(options.includes(temp) && temp == answer){
-      temp = possiblities.at(this.randIndex(possiblities)) ?? "NULL"
+  getRandomOptions(arr: string[], possibilities: string[], answer: string): string[] {
+    const uniqueOptions = new Set(arr);
+    while (uniqueOptions.size < 4) {
+      const temp = possibilities[this.randIndex(possibilities)] ?? 'NULL';
+      if (!uniqueOptions.has(temp) && temp !== answer) {
+        uniqueOptions.add(temp);
+      }
     }
-    return this.getRandomOptions([...arr,temp],possiblities,answer)
+    return Array.from(uniqueOptions);
   }
+  
 
   /*         Load Genres         */
 
@@ -192,34 +201,26 @@ export class HomeComponent implements OnInit {
     console.log(TOKEN_KEY);
   }
 
+  //On User input
   setSelected(value: string) {
     this.userSelection = value;
-    this.userSelections[this.index] = value; // Add index selcection for answerKey 
-    this.arrayOfIndexes[this.index] = this.index+1
-
-
-    if (this.userSelection == this.QuizData[this.index].answer) {
+    this.userSelections[this.index] = value;
+    this.arrayOfIndexes[this.index] = this.index + 1;
+  
+    if (value === this.QuizData[this.index].answer) {
       this.correct[this.index] = true;
       this.gameScore += 100;
     }
+  
     if (this.index < this.QuizData.length - 1) {
-      this.index = this.index + 1;
-    } 
-    if(this.index === this.userSelections.length-1){
+      this.index++;
+    } else {
       this.endGame = true;
-
     }
+  
     console.log(this.answerKey);
-
-    console.log(this.index)
   }
-  settingsSubmitted: boolean = true;
-  config: any = {
-    genre: "pop",
-    year: "2010-2019",
-    artist: "",
-    questions: 2
-  }
+  
   loadConfig(state: any): void { // load game configuration settings
     this.config = state
     console.log(this.config)
@@ -233,15 +234,13 @@ export class HomeComponent implements OnInit {
   updateAnswerKey(newData: any) {
     this.answerKey = newData;
   }
-  showQuestions: boolean = false;
-  endGame: boolean = false;
 
   replayGame(){
 
     console.log('Play Again event received');
 
 
-    this.leaderboardList.push({name: this.username, score:this.gameScore});
+    this.leaderboardList = [...this.leaderboardList, { name: this.username, score: this.gameScore }];
 
     this.leaderboardList.sort((a: { score: number; }, b: { score: number; }) => b.score - a.score);
 
