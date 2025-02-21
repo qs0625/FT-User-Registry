@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
     answers: this.correctAnswers
   }
 
-  leaderboardList: any =[{}];/*.sort( (a,b) => {
+  leaderboardList: any =[];/*.sort( (a,b) => {
     return b.score - a.score;
   })
 */
@@ -66,6 +66,7 @@ export class HomeComponent implements OnInit {
   /*         Init         */
 
   ngOnInit(): void {
+    console.log("leaderboard",this.leaderboardList);
     this.authLoading = true;
     const storedTokenString = localStorage.getItem(TOKEN_KEY);
     if (storedTokenString) {
