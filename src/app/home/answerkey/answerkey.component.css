@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    background-color: #F4F4F9;
     color: #333;
     margin: 0;
     padding: 0;
@@ -29,13 +29,15 @@ body {
     border-bottom: none;
   }
   .question-block p {
-    margin: 5px 0;
+    border: 2px;
+    border-color: #333;
+    margin-right: 5px;
   }
   .question-block p.question {
     font-weight: bold;
   }
   .question-block p.answer {
-    color: #4a90e2;
+    color: #4A90E2;
   }
   @font-face {
     font-family: myFirstFont;
