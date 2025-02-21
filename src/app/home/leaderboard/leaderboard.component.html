@@ -1,6 +1,6 @@
-<div>
-    <span *ngFor="let score of data">
-        <h4>{{score.name}}</h4>
-        <p>{{score.score}}</p>
+<div *ngIf="visible">
+    <span *ngFor="let user of data">
+        <h4>{{user.name}}</h4>
+        <p>{{user.score}}</p>
     </span>
 </div>

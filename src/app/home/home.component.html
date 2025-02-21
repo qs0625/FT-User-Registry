@@ -1,7 +1,14 @@
 <div *ngIf="authLoading || configLoading">Loading...</div>
 <div *ngIf="!authLoading && !configLoading">
+  <button (click)="toggleLeaderboard()">
+    <img src="src/assets/images/Leaderboard.png" alt="Leaderboard">
+  </button>
   <app-config-component [show]="settingsSubmitted" (config)="loadConfig($event)"></app-config-component>
   <app-question-card [show]="showQuestions" [index]="index" [data]="QuizData" (selected)="setSelected($event)"></app-question-card>
   <app-answerkey [visible]="showAnswers" [answerKey]="answerKey" (answerKeyUpdated)="updateAnswerKey($event)"></app-answerkey>
-  <app-gameover (showAns)="answersKey()" [visible]="endGame" [score]="gameScore" (replay)="replayGame()"></app-gameover>
+  <app-gameover (showAns)="answersKey()" [visible]="endGame" [score]="gameScore" (replay)="replayGame()" (inputValue)="handleInputValue($event)"></app-gameover>
+  
+
+  <!-- Conditionally display the leaderboard component -->
+  <app-leaderboard [data]="leaderboardList" [visible]="showLeaderBoard"></app-leaderboard>
 </div>
