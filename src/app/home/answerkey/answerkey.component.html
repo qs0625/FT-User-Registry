@@ -9,5 +9,6 @@
       
       <p [ngClass]="{'correct': answerKey.answers[i] === answerKey.choices[i], 'incorrect':  answerKey.answers[i] !== answerKey.choices[i]}">Choice: {{ answerKey.choices[i] }}</p>
     </div>
+    <button (click)="onHome()">Home</button>
   </div>
 </body>

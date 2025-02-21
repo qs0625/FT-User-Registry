@@ -123,7 +123,7 @@ export class HomeComponent implements OnInit {
   }
   processSongs = (res: any) => {
     let tracks = res.tracks.items
-    console.log(tracks)
+    // console.log(tracks)
     let artist: any[] = [];
     let album: any[] = [];
     let images: any[] = [];
@@ -238,9 +238,9 @@ export class HomeComponent implements OnInit {
     this.showQuestions = true;
   }
 
-  updateAnswerKey(newData: any) {
-    this.answerKey = newData;
-  }
+  // updateAnswerKey(newData: any) {
+  //   this.answerKey = {...this.answerKey,newData};
+  // }
 
   replayGame(){
 
@@ -265,7 +265,7 @@ export class HomeComponent implements OnInit {
     this.QuizData=[];
     this.gameScore=0;
 
-
+    this.showAnswers = false;
   }
   answersKey(){
     this.endGame = false;
