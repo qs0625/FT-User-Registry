@@ -1,4 +1,6 @@
-<span>
-    <app-datacard [data]="data[index]" (selectedValue)="handleSelection($event)"></app-datacard>
-    <button (click)="onSubmit()"> Submit</button>
-</span>
+<div *ngIf="show">
+    <span>
+        <app-datacard [data]="data[index]" (selectedValue)="handleSelection($event)"></app-datacard>
+        <button (click)="onSubmit()"> Submit</button>
+    </span>
+</div>

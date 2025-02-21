@@ -13,28 +13,63 @@ const TOKEN_KEY = "whos-who-access-token";
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit {
+
+
+  showLeaderBoard: boolean= false;
+  toggleLeaderboard() {
+    if(!this.showLeaderBoard){
+      this.showLeaderBoard=true;
+      this.settingsSubmitted=false;
+    }
+    else{
+      this.showLeaderBoard=false;
+      this.settingsSubmitted=true;
+    }
+
+  }
+
   constructor() { }
 
   index: number = 0;
   genre: string = "pop";
   numberOfQuestions: number = 2;
   correct: boolean[] = [false, false];
-  QuizData: any = [{
-    img_url: "https://placehold.co/200x200",
-    answer: "1",
-    options: ["1", "2", "3", "4"]
-  }, {
-    img_url: "https://placehold.co/200x200",
-    answer: "1",
-    options: ["2", "4", "6", "9"]
-  }]
-
-  genres: String[] = ["House", "Alternative", "J-Rock", "R&B"];
+  QuizData: any = [];
   selectedGenre: String = "";
   userSelection: string = "";
+  userSelections: string[] = [];
+  correctAnswers: string[] = [];
+  arrayOfIndexes: number[] = [];
+  gameScore: number = 0
+
+  answerKey: any = {
+    questions: this.arrayOfIndexes,
+    choices: this.userSelections,
+    answers: this.correctAnswers
+  }
+
+  leaderboardList: any =[{
+    name: "NAME 1",
+    score: 100
+  },{
+    name: "NAME 2",
+    score: 200
+  },{
+    name: "NAME 3",
+    score: 300
+  }].sort( (a,b) => {
+    return b.score - a.score;
+  })
+
   authLoading: boolean = false;
   configLoading: boolean = false;
+  showAnswers: boolean = false;
+
   token: String = "";
+
+  
+
+  /*         Init         */
 
   ngOnInit(): void {
     this.authLoading = true;
@@ -46,7 +81,6 @@ export class HomeComponent implements OnInit {
         this.authLoading = false;
         this.token = storedToken.value;
         this.loadGenres(storedToken.value);
-        //this.loadSongs(storedToken.value);
         return;
       }
     }
@@ -60,10 +94,13 @@ export class HomeComponent implements OnInit {
       this.authLoading = false;
       this.token = newToken.value;
       this.loadGenres(newToken.value);
-      //this.loadSongs(newToken.value);
+      this.loadSongs(newToken.value);
     });
   }
 
+
+
+  /*         Load Songs         */
 
   loadSongs = async (t: any) => {
     this.configLoading = true;
@@ -71,18 +108,55 @@ export class HomeComponent implements OnInit {
     const response = await fetchFromSpotify({
       token: t,
       endpoint: "search",
-      options: {
-        q: "genre: " + this.genre,
-        limit: 15,
+      params: {
+        q: "." + "genre:" + this.config.genre + "year:" + this.config.year,
+        limit: 50,
+        offset: 0,
         type: ["track"],
-        include_external: "audio"
+        market: "US",
       }
     })
-    console.log("RESPONSE : " + response)
+    this.processSongs(response)
     this.configLoading = false;
   }
+  processSongs = (res: any) => {
+    let tracks = res.tracks.items
+    console.log(tracks)
+    let artist: any[] = [];
+    let album: any[] = [];
+    let images: any[] = [];
+    let trackName: any[] = [];
+    let index = 0;
+    for (let item of tracks) {
+      artist[index] = item.artists[0].name
+      album[index] = item.album.name
+      images[index] = item.album.images[1].url
+      trackName[index] = item.name
+      index++;
+    }
+    for (let i = 0; i < this.numberOfQuestions; i++) {
+      let correctIndex = this.randIndex(album)
+      let temp = {
+        img_url: images.at(correctIndex),
+        answer: album.at(correctIndex),
+        options: this.getRandomOptions([album.at(correctIndex)],album,album.at(correctIndex))
+      }
+      this.correctAnswers[i] = temp.answer
+      this.QuizData = [...this.QuizData, temp]
+    }
+  }
+  randIndex = (arr: any[]) => Math.floor(Math.random() * arr.length)
+  getRandomOptions(arr: string[],possiblities:string[],answer:string): string[]{
+    if(arr.length == 4){return arr}
+    let options: string[] = arr;
+    let temp:string = possiblities.at(this.randIndex(possiblities)) ?? "NULL"
+    while(options.includes(temp) && temp == answer){
+      temp = possiblities.at(this.randIndex(possiblities)) ?? "NULL"
+    }
+    return this.getRandomOptions([...arr,temp],possiblities,answer)
+  }
 
-
+  /*         Load Genres         */
 
   loadGenres = async (t: any) => {
     this.configLoading = true;
@@ -98,7 +172,7 @@ export class HomeComponent implements OnInit {
     // console.log(response);
     // #################################################################################
 
-    this.genres = [
+    let genres = [
       "rock",
       "rap",
       "pop",
@@ -113,6 +187,10 @@ export class HomeComponent implements OnInit {
     this.configLoading = false;
   };
 
+
+
+  /*         Set Genres         */
+
   setGenre(selectedGenre: any) {
     this.selectedGenre = selectedGenre;
     console.log(this.selectedGenre);
@@ -121,15 +199,74 @@ export class HomeComponent implements OnInit {
 
   setSelected(value: string) {
     this.userSelection = value;
-    console.log(this.index)
-    console.log(this.QuizData.length)
+    this.userSelections[this.index] = value; // Add index selcection for answerKey 
+    this.arrayOfIndexes[this.index] = this.index+1
+
+
     if (this.userSelection == this.QuizData[this.index].answer) {
       this.correct[this.index] = true;
+      this.gameScore += 100;
     }
-    console.log(this.correct[this.index])
-    if(this.index < this.QuizData.length - 1){
+    if (this.index < this.QuizData.length - 1) {
       this.index = this.index + 1;
+    } 
+    if(this.index === this.userSelections.length-1){
+      this.endGame = true;
+
     }
+    console.log(this.answerKey);
+
     console.log(this.index)
   }
+  settingsSubmitted: boolean = true;
+  config: any = {
+    genre: "pop",
+    year: "2010-2019",
+    artist: "",
+    questions: 2
+  }
+  loadConfig(state: any): void { // load game configuration settings
+    this.config = state
+    console.log(this.config)
+    this.genre = this.config.genre
+    this.numberOfQuestions = this.config.questions
+    this.loadSongs(this.token);
+    this.settingsSubmitted = false;
+    this.showQuestions = true;
+  }
+
+  updateAnswerKey(newData: any) {
+    this.answerKey = newData;
+  }
+  showQuestions: boolean = false;
+  endGame: boolean = false;
+
+  replayGame(){
+
+    console.log('Play Again event received');
+
+    this.endGame = false;
+    this.settingsSubmitted=true;
+    this.showQuestions=false;
+
+    this.index=0;
+    this.answerKey= {
+      questions: this.arrayOfIndexes=[],
+      choices: this.userSelections=[],
+      answers: this.correctAnswers=[]
+    }
+    this.QuizData=[];
+    this.gameScore=0;
+
+
+  }
+  answersKey(){
+    this.endGame = false;
+    this.showQuestions=false;
+    this.showAnswers=true;
+    this.showLeaderBoard=false;
+  }
+  handleInputValue($event: string) {
+    throw new Error('Method not implemented.');
+    }
 }

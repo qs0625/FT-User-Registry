@@ -17,8 +17,8 @@ export class QuestionCardComponent implements OnInit {
     answer: "1",
     options: ["2", "4", "6", "9"]
   }]
+  @Input() show: boolean = false;
   currentSelected: string = "";
-
 
   constructor() { }
 
